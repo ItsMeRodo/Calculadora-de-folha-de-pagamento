@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora de Folha de Pagamento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de Folha de Pagamento</h1>
+        <form method="post">
+            <label for="hours_worked">Horas Trabalhadas:</label>
+            <input type="number" step="0.01" name="hours_worked" required>
+            <br>
+            <label for="hourly_rate">Taxa Horaria:</label>
+            <input type="number" step="0.01" name="hourly_rate" required>
+            <br>
+            <button type="submit">Calcular</button>
+        </form>
+        
+        <div class="result">
+            <h2>Resultado:</h2>
+            <p>Salario Bruto: R$ <span id="gross_pay">0.00</span></p>
+            <p>Imposto (15%): R$ <span id="tax_amount">0.00</span></p>
+            <p>Salario Liquido: R$ <span id="net_pay">0.00</span></p>
+        </div>
+    </div>
+    
+    <script>
+        const form = document.querySelector('form');
+        const grossPaySpan = document.getElementById('gross_pay');
+        const taxAmountSpan = document.getElementById('tax_amount');
+        const netPaySpan = document.getElementById('net_pay');
+        
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const hoursWorked = parseFloat(form.elements.hours_worked.value);
+            const hourlyRate = parseFloat(form.elements.hourly_rate.value);
+            const grossPay = (hoursWorked * hourlyRate).toFixed(2);
+            const taxAmount = (grossPay * 0.15).toFixed(2);
+            const netPay = (grossPay - taxAmount).toFixed(2);
+            
+            grossPaySpan.textContent = grossPay;
+            taxAmountSpan.textContent = taxAmount;
+            netPaySpan.textContent = netPay;
+        });
+    </script>
+</body>
+</html>
